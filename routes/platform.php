@@ -16,6 +16,8 @@ use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\SupplieEditScreen;
 use App\Orchid\Screens\SuppliesScreen;
+use App\Orchid\Screens\SupplyCreateScreen;
+use App\Orchid\Screens\SupplyEditScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -106,8 +108,10 @@ Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.exam
 // Список товаров
 Route::screen('/supplies', SuppliesScreen::class)->name('platform.supplies');
 
-// Создание нового и редактирование существующего товара
-Route::screen('/supply/{supply?}', SupplieEditScreen::class)->name('platform.supply.edit');
-Route::screen('/supply/create', SupplieEditScreen::class)->name('platform.supply.create');
+// Создание нового товара
+Route::screen('/supply/create', SupplyCreateScreen::class)->name('platform.supply.create');
+
+// Редактирование существующего товара
+Route::screen('/supply/{supply}', SupplyEditScreen::class)->name('platform.supply.edit');
 
 //Route::screen('idea', Idea::class, 'platform.screens.idea');

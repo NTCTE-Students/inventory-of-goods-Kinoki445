@@ -9,53 +9,31 @@ use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
+use Illuminate\Http\Request;
 
-class SupplieEditScreen extends Screen
+class SupplyEditScreen extends Screen
 {
-    /**
-     * Получить данные для отображения на экране.
-     *
-     * @param int|null $supply_id
-     * @return array
-     */
-    public function query($supply_id = null): iterable
+    public function query(Supply $supply): iterable
     {
-        $supply = $supply_id ? Supply::findOrFail($supply_id) : new Supply();
-
         return [
             'supply' => $supply,
         ];
     }
 
-    /**
-     * Название экрана, отображаемое в заголовке.
-     *
-     * @return string|null
-     */
     public function name(): ?string
     {
-        return $this->query()['supply']->exists ? 'Редактирование товара' : 'Создание товара';
+        return 'Редактирование товара';
     }
 
-    /**
-     * Кнопки действий экрана.
-     *
-     * @return \Orchid\Screen\Action[]
-     */
     public function commandBar(): array
     {
         return [
-            Button::make($this->query()['supply']->exists ? 'Сохранить изменения' : 'Создать товар')
+            Button::make('Сохранить изменения')
                 ->icon('bs.save')
-                ->method('saveSupply'),
+                ->method('updateSupply'),
         ];
     }
 
-    /**
-     * Элементы макета экрана.
-     *
-     * @return \Orchid\Screen\Layout[]|string[]
-     */
     public function layout(): iterable
     {
         return [
@@ -80,19 +58,15 @@ class SupplieEditScreen extends Screen
         ];
     }
 
-    /**
-     * Сохранение товара.
-     *
-     * @param Supply $supply
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function saveSupply(Supply $supply)
+    public function updateSupply(Supply $supply, Request $request)
     {
-        $data = request()->input('supply');
-        $supply->fill($data);
+        $supply->name = $request->input('supply.name');
+        $supply->description = $request->input('supply.description');
+        $supply->price = $request->input('supply.price');
+        $supply->amount = $request->input('supply.amount');
         $supply->save();
 
-        Toast::success($supply->exists ? 'Товар обновлен' : 'Товар создан');
+        Toast::success('Товар обновлен');
 
         return redirect()->route('platform.supplies');
     }
