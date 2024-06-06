@@ -14,6 +14,10 @@ use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\SupplieEditScreen;
+use App\Orchid\Screens\SuppliesScreen;
+use App\Orchid\Screens\SupplyCreateScreen;
+use App\Orchid\Screens\SupplyEditScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -100,5 +104,14 @@ Route::screen('/examples/layouts', ExampleLayoutsScreen::class)->name('platform.
 Route::screen('/examples/grid', ExampleGridScreen::class)->name('platform.example.grid');
 Route::screen('/examples/charts', ExampleChartsScreen::class)->name('platform.example.charts');
 Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.example.cards');
+
+// Список товаров
+Route::screen('/supplies', SuppliesScreen::class)->name('platform.supplies');
+
+// Создание нового товара
+Route::screen('/supply/create', SupplyCreateScreen::class)->name('platform.supply.create');
+
+// Редактирование существующего товара
+Route::screen('/supply/{supply}', SupplyEditScreen::class)->name('platform.supply.edit');
 
 //Route::screen('idea', Idea::class, 'platform.screens.idea');
